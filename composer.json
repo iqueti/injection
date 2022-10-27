@@ -1,0 +1,56 @@
+{
+    "name": "iqueti/injection",
+    "type": "library",
+    "description": "library for implementing Dependency Injection and Inversion of Control",
+    "keywords": ["freep", "dependency injection", "container", "inversion of control"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.0.0",
+        "psr/container": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "phpstan/phpstan": "^0.12",
+        "ricardopedias/freep-docmap": "^1.0",
+        "squizlabs/php_codesniffer": "3.*",
+        "phpmd/phpmd": "@stable",
+        "codacy/coverage": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Iqueti\\Injection\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts" : {
+        "test": [
+            "vendor/bin/phpunit --testdox"
+        ],
+        "docmap" : [
+            "rm -Rf docs/pt-br/*",
+            "vendor/bin/docmap -s assets/docs/pt-br -d docs/pt-br -r leiame.md -l pt-br",
+            "rm -Rf docs/en/*",
+            "vendor/bin/docmap -s assets/docs/en -d docs/en"
+        ],
+        "coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "analyse": [
+            "phpcbf --standard=PSR1,PSR12 src tests",
+            "phpcs --standard=PSR1,PSR12 src tests",
+            "phpmd ./src ansi cleancode,codesize,unusedcode,naming,design,controversial",
+            "phpmd ./tests ansi cleancode,codesize,unusedcode,naming,design,controversial",
+            "phpstan analyse --level=8 src",
+            "phpstan analyse --level=8 tests"
+        ]
+    }
+}
