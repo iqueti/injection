@@ -5,7 +5,7 @@
 # Este programa executa comandos do composer que está localizado dentro do conteiner
 # docker, dispensando a necessidade de instalar o composer no computador local
 
-PHP_CONTAINER='iqueti-injection'
+PHP_CONTAINER='iquety-injection'
 
 docker-compose up -d
 

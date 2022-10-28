@@ -1,5 +1,5 @@
 {
-    "name": "iqueti/injection",
+    "name": "iquety/injection",
     "type": "library",
     "description": "library for implementing Dependency Injection and Inversion of Control",
     "keywords": ["freep", "dependency injection", "container", "inversion of control"],
@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Iqueti\\Injection\\": "src/"
+            "Iquety\\Injection\\": "src/"
         }
     },
     "autoload-dev": {

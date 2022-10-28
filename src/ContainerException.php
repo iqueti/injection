@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Iqueti\Injection;
+namespace Iquety\Injection;
 
 use Psr\Container\ContainerExceptionInterface;
 use RuntimeException;

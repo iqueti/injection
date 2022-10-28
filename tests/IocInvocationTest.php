@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Container;
 
 use ArrayObject;
-use Iqueti\Injection\Container;
-use Iqueti\Injection\ContainerException;
-use Iqueti\Injection\InversionOfControl;
-use Iqueti\Injection\NotFoundException;
+use Iquety\Injection\Container;
+use Iquety\Injection\ContainerException;
+use Iquety\Injection\InversionOfControl;
+use Iquety\Injection\NotFoundException;
 use stdClass;
 use Tests\Support\ContainerIoc;
 use Tests\Support\ContainerIocNoConstructor;

@@ -6,9 +6,9 @@ namespace Tests\Container;
 
 use ArrayObject;
 use Exception;
-use Iqueti\Injection\Container;
-use Iqueti\Injection\ContainerException;
-use Iqueti\Injection\NotFoundException;
+use Iquety\Injection\Container;
+use Iquety\Injection\ContainerException;
+use Iquety\Injection\NotFoundException;
 use Tests\TestCase;
 
 /** @codeCoverageIgnore */

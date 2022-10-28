@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Container;
 
 use ArrayObject;
-use Iqueti\Injection\Container;
-use Iqueti\Injection\InversionOfControl;
-use Iqueti\Injection\NotFoundException;
+use Iquety\Injection\Container;
+use Iquety\Injection\InversionOfControl;
+use Iquety\Injection\NotFoundException;
 use Tests\Support\ContainerIoc;
 use Tests\TestCase;
 

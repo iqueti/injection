@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Iqueti\Injection\Adapter\HttpFactory\DiactorosHttpFactory;
-use Iqueti\Injection\Adapter\Session\MemorySession;
-use Iqueti\Injection\Application;
-use Iqueti\Injection\Bootstrap;
-use Iqueti\Injection\Http\HttpFactory;
-use Iqueti\Injection\Http\Session;
-use Iqueti\Injection\Routing\Router;
+use Iquety\Injection\Adapter\HttpFactory\DiactorosHttpFactory;
+use Iquety\Injection\Adapter\Session\MemorySession;
+use Iquety\Injection\Application;
+use Iquety\Injection\Bootstrap;
+use Iquety\Injection\Http\HttpFactory;
+use Iquety\Injection\Http\Session;
+use Iquety\Injection\Routing\Router;
 use Laminas\Diactoros\ServerRequestFactory;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 use Psr\Http\Message\ResponseInterface;

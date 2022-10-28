@@ -3,6 +3,6 @@ services:
 
   php:
     image: ricardopedias/docker-project:php80
-    container_name: iqueti-injection
+    container_name: iquety-injection
     volumes:
       - .:/application

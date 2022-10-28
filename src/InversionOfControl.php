@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Iqueti\Injection;
+namespace Iquety\Injection;
 
 use Closure;
-use Iqueti\Injection\ContainerException;
-use Iqueti\Injection\NotFoundException;
+use Iquety\Injection\ContainerException;
+use Iquety\Injection\NotFoundException;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionFunction;
