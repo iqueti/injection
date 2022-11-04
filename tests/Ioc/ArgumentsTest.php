@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Tests\Container;
+namespace Tests\Container\Ioc;
 
 use ArrayObject;
 use Iquety\Injection\Container;
 use Iquety\Injection\InversionOfControl;
 use Iquety\Injection\NotFoundException;
-use Tests\Support\ContainerIoc;
+use Tests\Ioc\Support\Ioc;
 use Tests\TestCase;
 
-class IocArgumentsTest extends TestCase
+class ArgumentsTest extends TestCase
 {
     /** @test */
-    public function runMethodWithRequiredArguments(): void
+    public function methodWithRequiredArguments(): void
     {
         $container = new Container();
         $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
@@ -22,14 +22,14 @@ class IocArgumentsTest extends TestCase
         $control = new InversionOfControl($container);
 
         $value = $control->resolve(
-            ContainerIoc::class . "::injectedMethodExtraArguments", // <- injeta ArrayObject
+            Ioc::class . "::injectedMethodExtraArguments", // <- injeta ArrayObject
             [ "id" => "1", "name" => "Ricardo"] // <- acrescenta  $id + $name
         );
         $this->assertSame([ 'x', 1, "Ricardo" ], $value);
     }
 
     /** @test */
-    public function runMethodWithoutRequiredArguments(): void
+    public function methodWithoutRequiredArguments(): void
     {
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage(
@@ -41,7 +41,7 @@ class IocArgumentsTest extends TestCase
 
         $control = new InversionOfControl($container);
         $control->resolve(
-            ContainerIoc::class . "::injectedMethodExtraArguments", // <- injeta ArrayObject
+            Ioc::class . "::injectedMethodExtraArguments", // <- injeta ArrayObject
             [ "id" => "1", ] // <- acrescenta  $id, mas esquece do $name
         );
     }
@@ -67,7 +67,7 @@ class IocArgumentsTest extends TestCase
      * @param array<string,string> $arguments
      * @param array<int,mixed> $values
     */
-    public function runMethodWithDefaultValueArguments(array $arguments, array $values): void
+    public function methodWithDefaultValueArguments(array $arguments, array $values): void
     {
         $container = new Container();
         $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
@@ -75,7 +75,7 @@ class IocArgumentsTest extends TestCase
         $control = new InversionOfControl($container);
 
         $value = $control->resolve(
-            ContainerIoc::class . "::injectedMethodExtraDefaultValueArguments", // <- injeta ArrayObject
+            Ioc::class . "::injectedMethodExtraDefaultValueArguments", // <- injeta ArrayObject
             $arguments // <- acrescenta  $id + $name
         );
 

@@ -15,14 +15,14 @@ use Throwable;
  */
 class Container implements ContainerInterface
 {
-    public const RESOLVE_FACTORY = 'factory';
+    private const RESOLVE_FACTORY = 'factory';
 
-    public const RESOLVE_SINGLETON = 'singleton';
+    private const RESOLVE_SINGLETON = 'singleton';
 
-    /** @var array<string,Closure|string> */
+    /** @var array<string,mixed> */
     private array $factory = [];
 
-    /** @var array<string,Closure|string> */
+    /** @var array<string,mixed> */
     private array $singleton = [];
 
     /** @var array<string, bool> */
@@ -30,9 +30,9 @@ class Container implements ContainerInterface
 
     /**
      * @param string $id
-     * @param Closure|string $value
+     * @param mixed $value
      */
-    public function registerDependency(string $id, Closure|string $value = null): void
+    public function registerDependency(string $id, mixed $value = null): void
     {
         // dependência singleton é sempre singleton
         if (isset($this->singleton[$id])) {
@@ -46,9 +46,9 @@ class Container implements ContainerInterface
 
     /**
      * @param string $id
-     * @param Closure|string $value
+     * @param mixed $value
      */
-    public function registerSingletonDependency(string $id, Closure|string $value = null): void
+    public function registerSingletonDependency(string $id, mixed $value = null): void
     {
         if (isset($this->factory[$id]) === true) {
             unset($this->factory[$id]);
@@ -147,7 +147,7 @@ class Container implements ContainerInterface
             $resolved = new $registereds[$id]();
         }
 
-        // se não for um callable ou assinatura de classe, retorna uma string
+        // se não for um callable ou assinatura de classe, retorna o próprio valor
         return $resolved;
     }
 

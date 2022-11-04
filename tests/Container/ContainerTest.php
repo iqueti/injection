@@ -156,7 +156,7 @@ class ContainerTest extends TestCase
     }
 
     /** @test */
-    public function notFoundException(): void
+    public function getNotFoundException(): void
     {
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('Could not find dependency definition for not-exists');
@@ -181,7 +181,7 @@ class ContainerTest extends TestCase
     }
 
     /** @test */
-    public function resolveException(): void
+    public function resolveWithErrorInFactory(): void
     {
         $this->expectException(ContainerException::class);
 

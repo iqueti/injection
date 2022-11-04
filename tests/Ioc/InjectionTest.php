@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Container;
+namespace Tests\Container\Ioc;
 
 use ArrayObject;
 use Iquety\Injection\Container;
@@ -10,12 +10,11 @@ use Iquety\Injection\ContainerException;
 use Iquety\Injection\InversionOfControl;
 use Iquety\Injection\NotFoundException;
 use stdClass;
-use Tests\Support\ContainerIoc;
-use Tests\Support\ContainerIocNoConstructor;
+use Tests\Ioc\Support\Ioc;
+use Tests\Ioc\Support\IocNoConstructor;
 use Tests\TestCase;
 
-/** @codeCoverageIgnore */
-class ContainerIocInvocationTest extends TestCase
+class InjectionTest extends TestCase
 {
     /** @test */
     public function injectDependencyInConstructor(): void
@@ -28,7 +27,7 @@ class ContainerIocInvocationTest extends TestCase
 
         // o método ContainerIoc->values devolve um array com os valores setados
         // no construtor __construct(ArrayObject $object, stdClass $class = null)
-        $results = $control->resolve(ContainerIoc::class . "::values");
+        $results = $control->resolve(Ioc::class . "::values");
         $this->assertInstanceOf(ArrayObject::class, $results[0]);
         $this->assertInstanceOf(stdClass::class, $results[1]);
     }
@@ -42,7 +41,7 @@ class ContainerIocInvocationTest extends TestCase
         );
 
         $control = new InversionOfControl(new Container());
-        $control->resolve(ContainerIoc::class . "::values");
+        $control->resolve(Ioc::class . "::values");
     }
 
     /** @test */
@@ -55,38 +54,6 @@ class ContainerIocInvocationTest extends TestCase
         $control->resolve("values");
     }
 
-    /** @return array<int,mixed> */
-    public function methodsInvocationProvider(): array
-    {
-        return [
-            [ ContainerIocNoConstructor::class . "::injectedMethod" ],
-            [ ContainerIoc::class . "::injectedMethod" ],
-            [ ContainerIoc::class . "::injectedStaticMethod" ],
-            [ array(ContainerIoc::class, "injectedMethod") ],
-            [ array(new ContainerIoc(new ArrayObject()), "injectedMethod") ],
-            [ new ContainerIoc(new ArrayObject()) ], // __invoke(ArrayObject $o)
-            [ fn(ArrayObject $object) => $object->getArrayCopy() ],
-            [ "declaredFunction" ],
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider methodsInvocationProvider
-     * @param mixed $caller
-    */
-    public function runMethod($caller): void
-    {
-        include_once __DIR__ . '/Support/ContainerIocFunction.php';
-
-        $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
-
-        $control = new InversionOfControl($container);
-        $value = $control->resolve($caller); // <- injeta ArrayObject como argumento
-        $this->assertEquals([ 'x' ], $value);
-    }
-
     /** @test */
     public function injectNotFoundDependencyInMethod(): void
     {
@@ -96,6 +63,6 @@ class ContainerIocInvocationTest extends TestCase
         );
 
         $control = new InversionOfControl(new Container());
-        $control->resolve(ContainerIocNoConstructor::class . "::injectedMethod");
+        $control->resolve(IocNoConstructor::class . "::injectedMethod");
     }
 }

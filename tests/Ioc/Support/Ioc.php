@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Support;
+namespace Tests\Ioc\Support;
 
 use ArrayObject;
 use stdClass;
 
 /** @SuppressWarnings(PHPMD.ShortVariable) */
-class ContainerIoc
+class Ioc
 {
     /** @var array<int,string> */
     private array $values;

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Support;
+namespace Tests\Ioc\Support;
 
 use ArrayObject;
 
-class ContainerIocNoConstructor
+class IocNoConstructor
 {
     /**
      * @param ArrayObject<int,string> $object

@@ -26,6 +26,7 @@ use ReflectionObject;
  */
 class TestCase extends FrameworkTestCase
 {
+    /** Obtém o valor de uma propriedade, mesmo que ela seja restrita */
     public function getPropertyValue(object $instance, string $name): mixed
     {
         $reflection = new ReflectionObject($instance);
