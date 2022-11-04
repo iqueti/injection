@@ -16,15 +16,13 @@ use Tests\Ioc\Support\IocInterface;
 use Tests\Ioc\Support\IocNoConstructor;
 use Tests\TestCase;
 
-include_once __DIR__ . '/Support/IocFunction.php';
-
 class InvocationContractTest extends TestCase
 {
-    /** @return array<int,mixed> */
+    /** @return array<string,mixed> */
     public function contractOkProvider(): array
     {
         return [
-            'explicity' =>[ Ioc::class . "::injectedMethod" ],
+            'explicity' => [ Ioc::class . "::injectedMethod" ],
             'explicity static' => [ Ioc::class . "::injectedStaticMethod" ],
             'contract array' => [ array(Ioc::class, "injectedMethod") ],
             'instance array' => [ array(new Ioc(new ArrayObject()), "injectedMethod") ],
@@ -49,7 +47,7 @@ class InvocationContractTest extends TestCase
         $value = $control->resolveOnly(Ioc::class, $caller);
         $value = $control->resolveOnly(IocAbstract::class, $caller);
         $value = $control->resolveOnly(IocInterface::class, $caller);
-        
+
         $this->assertEquals([ 'x' ], $value);
     }
 
@@ -99,6 +97,8 @@ class InvocationContractTest extends TestCase
     /** @test */
     public function contractErrorFunction(): void
     {
+        include_once __DIR__ . '/Support/IocFunction.php';
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('/Type .* do not have contracts/');
 

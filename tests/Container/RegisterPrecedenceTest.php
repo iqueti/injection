@@ -54,7 +54,7 @@ class RegisterPrecedenceTest extends TestCase
         $this->assertCount(0, $singletonValues);
         $this->assertCount(1, $factoryValues);
         $this->assertTrue(in_array('parangarikotirimirruaro', $factoryValues));
-        
+
         // tenta registrar um singleton com mesmo $id do factory
         $container->registerSingletonDependency('id', 'sobrescreve');
 

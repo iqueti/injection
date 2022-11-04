@@ -14,6 +14,7 @@ use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionParameter;
 use Reflector;
+use UnhandledMatchError;
 
 class InversionOfControl
 {
@@ -31,8 +32,6 @@ class InversionOfControl
      * callable: "Controller" ou function() {}
      * @param string|array<string,string>|object|callable $callable
      * @param array<string,mixed> $arguments
-     * @return mixed
-     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function resolve(string|array|object|callable $callable, array $arguments = []): mixed
     {
@@ -47,11 +46,9 @@ class InversionOfControl
      * array: [Controller, action]
      * object: new Controller()
      * callable: "Controller" ou function() {}
-     * @param string $instanceContract 
+     * @param string $allowedContract
      * @param string|array<string,string>|object|callable $callable
      * @param array<string,mixed> $arguments
-     * @return mixed
-     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function resolveOnly(
         string $allowedContract,
@@ -64,18 +61,28 @@ class InversionOfControl
         return $this->resolveRaw($callable, $arguments);
     }
 
+    /**
+     * @param string|array<string,string>|object|callable $callable
+     * @param array<string,mixed> $arguments
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
     private function resolveRaw(string|array|object|callable $callable, array $arguments = []): mixed
     {
         $info = $this->callableInfo($callable);
 
-        return match($info['type']){
-            'class' => $this->invokeClass($info['wrapper'], $info['callable'], $arguments),
-            'method' => $this->invokeMagic($info['wrapper'], $info['callable'], $arguments),
-            'function' => $this->invokeFunction(\Closure::fromCallable($info['callable']), $arguments)
-        };
+        if ($info['type'] === 'class') {
+            return $this->invokeClass($info['wrapper'], $info['callable'], $arguments);
+        }
+
+        if ($info['type'] === 'method') {
+            return $this->invokeMagic($info['wrapper'], $info['callable'], $arguments);
+        }
+
+        return $this->invokeFunction(\Closure::fromCallable($info['callable']), $arguments);
     }
 
     /**
+     * @param string|array<string,string>|object|callable $callable
      * @return array<string,mixed>
      * @throws ContainerException para injeções impossíveis
      */
@@ -117,18 +124,20 @@ class InversionOfControl
         return $info;
     }
 
+    /**
+     * @param ReflectionClass<object>|string $reflection
+     */
     private function assertContract(ReflectionClass|string $reflection): void
     {
         if ($this->forceInstanceOf === '') {
             return;
         }
-        
+
         // para funções, pois não possuem contratos
         if (is_string($reflection) === true) {
             throw new InvalidArgumentException(
                 sprintf('Type %s do not have contracts', $reflection)
             );
-            return;
         }
 
         if (
@@ -144,9 +153,8 @@ class InversionOfControl
     /**
      * @param object|class-string $objectOrClass
      * @param array<string,mixed> $arguments
-     * @return mixed
     */
-    private function invokeClass(object|string $objectOrClass, string $methodName, array $arguments)
+    private function invokeClass(object|string $objectOrClass, string $methodName, array $arguments): mixed
     {
         // injeta dependencias no construtor
         $reflection = new ReflectionClass($objectOrClass);
@@ -164,9 +172,8 @@ class InversionOfControl
 
     /**
      * @param array<string,mixed> $arguments
-     * @return mixed
     */
-    private function invokeMagic(object $object, string $method, array $arguments)
+    private function invokeMagic(object $object, string $method, array $arguments): mixed
     {
         $reflection = new ReflectionMethod($object, $method);
 

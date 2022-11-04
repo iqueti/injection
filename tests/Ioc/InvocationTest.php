@@ -13,12 +13,12 @@ use Tests\TestCase;
 
 class InvocationTest extends TestCase
 {
-    /** @return array<int,mixed> */
+    /** @return array<string,mixed> */
     public function methodsInvocationProvider(): array
     {
         return [
-            'explicity' =>[ Ioc::class . "::injectedMethod" ],
-            'explicity no constructor' =>[ IocNoConstructor::class . "::injectedMethod" ],
+            'explicity' => [ Ioc::class . "::injectedMethod" ],
+            'explicity no constructor' => [ IocNoConstructor::class . "::injectedMethod" ],
             'explicity static' => [ Ioc::class . "::injectedStaticMethod" ],
             'contract array' => [ array(Ioc::class, "injectedMethod") ],
             'instance array' => [ array(new Ioc(new ArrayObject()), "injectedMethod") ],

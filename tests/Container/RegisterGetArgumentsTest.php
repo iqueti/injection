@@ -117,7 +117,7 @@ class RegisterGetArgumentsTest extends TestCase
         $this->expectExceptionMessage('Could not find dependency definition for myid');
 
         $container = new Container();
-        
+
         $container->getWithArguments('myid', ['ric', 'ardo']);
     }
 }

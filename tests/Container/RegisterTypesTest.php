@@ -86,7 +86,7 @@ class RegisterTypesTest extends TestCase
     public function registerOnlyContract(): void
     {
         $container = new Container();
-        
+
         $container->registerDependency(ArrayObject::class);
         $this->assertEquals(new ArrayObject(), $container->get(ArrayObject::class));
     }
