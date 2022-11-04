@@ -8,7 +8,7 @@ use ArrayObject;
 use stdClass;
 
 /** @SuppressWarnings(PHPMD.ShortVariable) */
-class Ioc
+class Ioc extends IocAbstract implements IocInterface
 {
     /** @var array<int,string> */
     private array $values;
