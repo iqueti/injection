@@ -50,7 +50,7 @@ class InversionOfControl
      * @param string|array<string,string>|object|callable $callable
      * @param array<string,mixed> $arguments
      */
-    public function resolveOnly(
+    public function resolveTo(
         string $allowedContract,
         string|array|object|callable $callable,
         array $arguments = []

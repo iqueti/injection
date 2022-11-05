@@ -44,9 +44,9 @@ class InvocationContractTest extends TestCase
 
         // $caller <- injeta ArrayObject como argumento
 
-        $value = $control->resolveOnly(Ioc::class, $caller);
-        $value = $control->resolveOnly(IocAbstract::class, $caller);
-        $value = $control->resolveOnly(IocInterface::class, $caller);
+        $value = $control->resolveTo(Ioc::class, $caller);
+        $value = $control->resolveTo(IocAbstract::class, $caller);
+        $value = $control->resolveTo(IocInterface::class, $caller);
 
         $this->assertEquals([ 'x' ], $value);
     }
@@ -68,7 +68,7 @@ class InvocationContractTest extends TestCase
 
         // $caller <- injeta ArrayObject como argumento
 
-        $value = $control->resolveOnly(DateTime::class, $caller);
+        $value = $control->resolveTo(DateTime::class, $caller);
 
         $this->assertEquals([ 'x' ], $value);
     }
@@ -86,7 +86,7 @@ class InvocationContractTest extends TestCase
 
         // $caller <- injeta ArrayObject como argumento
 
-        $value = $control->resolveOnly(
+        $value = $control->resolveTo(
             DateTime::class,
             fn(ArrayObject $object) => $object->getArrayCopy()
         );
@@ -109,7 +109,7 @@ class InvocationContractTest extends TestCase
 
         // $caller <- injeta ArrayObject como argumento
 
-        $value = $control->resolveOnly(DateTime::class, "declaredFunction");
+        $value = $control->resolveTo(DateTime::class, "declaredFunction");
 
         $this->assertEquals([ 'x' ], $value);
     }
