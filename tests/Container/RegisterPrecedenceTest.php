@@ -15,7 +15,7 @@ class RegisterPrecedenceTest extends TestCase
         $container = new Container();
 
         // registra uma dependência singleton
-        $container->registerSingletonDependency('myid', 'parangarikotirimirruaro');
+        $container->addSingleton('myid', 'parangarikotirimirruaro');
 
         // obtém a listas de dependências registradas
         $singletonValues = $this->getPropertyValue($container, 'singleton');
@@ -26,7 +26,7 @@ class RegisterPrecedenceTest extends TestCase
         $this->assertTrue(in_array('parangarikotirimirruaro', $singletonValues));
 
         // tenta registrar uma fábrica com mesmo $id do singleton
-        $container->registerDependency('myid', 'sobrescreve');
+        $container->addFactory('myid', 'sobrescreve');
 
         // obtém a listas de dependencias registradas
         $singletonValues = $this->getPropertyValue($container, 'singleton');
@@ -45,7 +45,7 @@ class RegisterPrecedenceTest extends TestCase
         $container = new Container();
 
         // registra uma factory
-        $container->registerDependency('id', 'parangarikotirimirruaro');
+        $container->addFactory('id', 'parangarikotirimirruaro');
 
         // obtém a listas de dependências registradas
         $singletonValues = $this->getPropertyValue($container, 'singleton');
@@ -56,7 +56,7 @@ class RegisterPrecedenceTest extends TestCase
         $this->assertTrue(in_array('parangarikotirimirruaro', $factoryValues));
 
         // tenta registrar um singleton com mesmo $id do factory
-        $container->registerSingletonDependency('id', 'sobrescreve');
+        $container->addSingleton('id', 'sobrescreve');
 
         // dependência é removida da fábrica e alocada como singleton
         // porque o uso de um singleton precede o uso de factories

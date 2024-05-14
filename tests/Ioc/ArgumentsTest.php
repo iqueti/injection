@@ -17,7 +17,7 @@ class ArgumentsTest extends TestCase
     public function methodWithRequiredArguments(): void
     {
         $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
+        $container->addFactory(ArrayObject::class, fn() => new ArrayObject(['x']));
 
         $control = new InversionOfControl($container);
 
@@ -37,7 +37,7 @@ class ArgumentsTest extends TestCase
         );
 
         $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
+        $container->addFactory(ArrayObject::class, fn() => new ArrayObject(['x']));
 
         $control = new InversionOfControl($container);
         $control->resolve(
@@ -46,7 +46,7 @@ class ArgumentsTest extends TestCase
         );
     }
 
-    /** @return array<int,array> */
+    /** @return array<int,array<int,mixed>> */
     public function valuedArgumentsProvider(): array
     {
         return [
@@ -70,7 +70,7 @@ class ArgumentsTest extends TestCase
     public function methodWithDefaultValueArguments(array $arguments, array $values): void
     {
         $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
+        $container->addFactory(ArrayObject::class, fn() => new ArrayObject(['x']));
 
         $control = new InversionOfControl($container);
 

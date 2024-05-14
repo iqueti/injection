@@ -20,8 +20,8 @@ class InjectionTest extends TestCase
     public function injectDependencyInConstructor(): void
     {
         $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject());
-        $container->registerDependency(stdClass::class, fn() => new stdClass());
+        $container->addFactory(ArrayObject::class, fn() => new ArrayObject());
+        $container->addFactory(stdClass::class, fn() => new stdClass());
 
         $control = new InversionOfControl($container);
 

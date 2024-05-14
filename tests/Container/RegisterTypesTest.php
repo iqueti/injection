@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Tests\Container;
 
 use ArrayObject;
-use Exception;
 use Iquety\Injection\Container;
-use Iquety\Injection\ContainerException;
-use Iquety\Injection\NotFoundException;
 use Tests\TestCase;
 
 class RegisterTypesTest extends TestCase
@@ -20,7 +17,7 @@ class RegisterTypesTest extends TestCase
 
         $this->assertFalse($container->has('myid'));
 
-        $container->registerDependency('myid', 'parangarikotirimirruaro');
+        $container->addFactory('myid', 'parangarikotirimirruaro');
         $this->assertTrue($container->has('myid'));
     }
 
@@ -30,7 +27,7 @@ class RegisterTypesTest extends TestCase
 
         $this->assertFalse($container->has('myid'));
 
-        $container->registerSingletonDependency('myid', 'parangarikotirimirruaro');
+        $container->addSingleton('myid', 'parangarikotirimirruaro');
         $this->assertTrue($container->has('myid'));
     }
 
@@ -39,21 +36,21 @@ class RegisterTypesTest extends TestCase
     {
         $container = new Container();
 
-        $container->registerDependency('mystring', 'parangarikotirimirruaro');
+        $container->addFactory('mystring', 'parangarikotirimirruaro');
         $this->assertEquals('parangarikotirimirruaro', $container->get('mystring'));
 
-        $container->registerDependency('myint', 11);
+        $container->addFactory('myint', 11);
         $this->assertEquals(11, $container->get('myint'));
 
-        $container->registerDependency('myfloat', 11.22);
+        $container->addFactory('myfloat', 11.22);
         $this->assertEquals(11.22, $container->get('myfloat'));
 
         $array = ['one', 'two', 'three'];
-        $container->registerDependency('myarray', $array);
+        $container->addFactory('myarray', $array);
         $this->assertEquals($array, $container->get('myarray'));
 
         $object = (object)['one', 'two', 'three'];
-        $container->registerDependency('myobject', $object);
+        $container->addFactory('myobject', $object);
         $this->assertEquals($object, $container->get('myobject'));
     }
 
@@ -61,7 +58,7 @@ class RegisterTypesTest extends TestCase
     public function registerClosure(): void
     {
         $container = new Container();
-        $container->registerDependency('id', fn() => "kkk");
+        $container->addFactory('id', fn() => "kkk");
         $this->assertEquals('kkk', $container->get('id'));
     }
 
@@ -69,7 +66,7 @@ class RegisterTypesTest extends TestCase
     public function registerObjectContract(): void
     {
         $container = new Container();
-        $container->registerDependency('id', ArrayObject::class);
+        $container->addFactory('id', ArrayObject::class);
         $this->assertInstanceOf(ArrayObject::class, $container->get('id'));
     }
 
@@ -77,7 +74,7 @@ class RegisterTypesTest extends TestCase
     public function registerFunction(): void
     {
         $container = new Container();
-        $container->registerDependency('id', 'microtime');
+        $container->addFactory('id', 'microtime');
 
         $this->assertNotFalse(preg_match('#[0-9]{1}.[0-9]* [0-9]*#', $container->get('id')));
     }
@@ -87,7 +84,7 @@ class RegisterTypesTest extends TestCase
     {
         $container = new Container();
 
-        $container->registerDependency(ArrayObject::class);
+        $container->addFactory(ArrayObject::class);
         $this->assertEquals(new ArrayObject(), $container->get(ArrayObject::class));
     }
 }

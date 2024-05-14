@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Container;
 
-use ArgumentCountError;
-use ArrayObject;
-use Exception;
 use Iquety\Injection\Container;
 use Iquety\Injection\ContainerException;
 use Tests\TestCase;
@@ -17,7 +14,7 @@ class RegisterGetArgumentsTest extends TestCase
     public function getSingleton(): void
     {
         $container = new Container();
-        $container->registerSingletonDependency('myid', fn($one, $two) => $one . $two);
+        $container->addSingleton('myid', fn($one, $two) => $one . $two);
 
         $this->assertEquals(
             'ricardo',
@@ -44,7 +41,7 @@ class RegisterGetArgumentsTest extends TestCase
         $this->expectExceptionMessageMatches('/Too few arguments to function .*/');
 
         $container = new Container();
-        $container->registerSingletonDependency('myid', fn($one, $two) => $one . $two);
+        $container->addSingleton('myid', fn($one, $two) => $one . $two);
 
         $this->assertEquals(
             'ricardo',
@@ -56,7 +53,7 @@ class RegisterGetArgumentsTest extends TestCase
     public function getFactory(): void
     {
         $container = new Container();
-        $container->registerDependency('myid', fn($one, $two) => $one . $two);
+        $container->addFactory('myid', fn($one, $two) => $one . $two);
 
         $this->assertEquals(
             'ricardo',
@@ -77,7 +74,7 @@ class RegisterGetArgumentsTest extends TestCase
         $this->expectExceptionMessageMatches('/Too few arguments to function .*/');
 
         $container = new Container();
-        $container->registerDependency('myid', fn($one, $two) => $one . $two);
+        $container->addFactory('myid', fn($one, $two) => $one . $two);
 
         $this->assertEquals(
             'ricardo',
@@ -97,7 +94,7 @@ class RegisterGetArgumentsTest extends TestCase
         $this->expectExceptionMessageMatches('/Too few arguments to function .*/');
 
         $container = new Container();
-        $container->registerDependency('myid', fn($one, $two) => $one . $two);
+        $container->addFactory('myid', fn($one, $two) => $one . $two);
 
         $this->assertEquals(
             'ricardo',

@@ -38,7 +38,7 @@ class InvocationContractTest extends TestCase
     public function contractOk($caller): void
     {
         $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
+        $container->addFactory(ArrayObject::class, fn() => new ArrayObject(['x']));
 
         $control = new InversionOfControl($container);
 
@@ -62,7 +62,7 @@ class InvocationContractTest extends TestCase
         $this->expectExceptionMessageMatches('/Class type .* is not allowed/');
 
         $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
+        $container->addFactory(ArrayObject::class, fn() => new ArrayObject(['x']));
 
         $control = new InversionOfControl($container);
 
@@ -80,7 +80,7 @@ class InvocationContractTest extends TestCase
         $this->expectExceptionMessageMatches('/Class type .* is not allowed/');
 
         $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
+        $container->addFactory(ArrayObject::class, fn() => new ArrayObject(['x']));
 
         $control = new InversionOfControl($container);
 
@@ -103,7 +103,7 @@ class InvocationContractTest extends TestCase
         $this->expectExceptionMessageMatches('/Type .* do not have contracts/');
 
         $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
+        $container->addFactory(ArrayObject::class, fn() => new ArrayObject(['x']));
 
         $control = new InversionOfControl($container);
 

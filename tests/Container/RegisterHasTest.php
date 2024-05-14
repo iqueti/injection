@@ -16,17 +16,18 @@ class RegisterHasTest extends TestCase
 
         $this->assertFalse($container->has('myid'));
 
-        $container->registerDependency('myid', 'parangarikotirimirruaro');
+        $container->addFactory('myid', 'parangarikotirimirruaro');
         $this->assertTrue($container->has('myid'));
     }
 
+    /** @test */
     public function hasSingleton(): void
     {
         $container = new Container();
 
         $this->assertFalse($container->has('myid'));
 
-        $container->registerSingletonDependency('myid', 'parangarikotirimirruaro');
+        $container->addSingleton('myid', 'parangarikotirimirruaro');
         $this->assertTrue($container->has('myid'));
     }
 }

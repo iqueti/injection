@@ -29,10 +29,11 @@ class Container implements ContainerInterface
     private array $singletonResolved = [];
 
     /**
+     * Registra uma dependência fabricável
      * @param string $id
      * @param mixed $value
      */
-    public function registerDependency(string $id, mixed $value = null): void
+    public function addFactory(string $id, mixed $value = null): void
     {
         // dependência singleton é sempre singleton
         if (isset($this->singleton[$id])) {
@@ -45,10 +46,11 @@ class Container implements ContainerInterface
     }
 
     /**
+     * Registra uma dependência compartilhada
      * @param string $id
      * @param mixed $value
      */
-    public function registerSingletonDependency(string $id, mixed $value = null): void
+    public function addSingleton(string $id, mixed $value = null): void
     {
         if (isset($this->factory[$id]) === true) {
             unset($this->factory[$id]);

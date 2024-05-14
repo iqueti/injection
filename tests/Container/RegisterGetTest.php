@@ -17,7 +17,7 @@ class RegisterGetTest extends TestCase
     public function getSingleton(): void
     {
         $container = new Container();
-        $container->registerSingletonDependency('id', fn() => microtime());
+        $container->addSingleton('id', fn() => microtime());
 
         // a mesma instância é chamada todas as vezes
         $this->assertEquals($container->get('id'), $container->get('id'));
@@ -27,7 +27,7 @@ class RegisterGetTest extends TestCase
     public function getFactory(): void
     {
         $container = new Container();
-        $container->registerDependency('id', fn() => microtime());
+        $container->addFactory('id', fn() => microtime());
 
         // a instância é fabricada a cada chamada
         $this->assertNotEquals($container->get('id'), $container->get('id'));
@@ -37,7 +37,7 @@ class RegisterGetTest extends TestCase
     public function sigletonReference(): void
     {
         $container = new Container();
-        $container->registerSingletonDependency(ArrayObject::class);
+        $container->addSingleton(ArrayObject::class);
 
         /** @var ArrayObject<int, string> */
         $retrieveOne = $container->get(ArrayObject::class);
@@ -70,7 +70,7 @@ class RegisterGetTest extends TestCase
         $this->expectException(ContainerException::class);
 
         $container = new Container();
-        $container->registerDependency('closure', fn() => throw new Exception());
+        $container->addFactory('closure', fn() => throw new Exception());
         $container->get('closure');
     }
 }

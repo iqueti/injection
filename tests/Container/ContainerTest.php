@@ -19,12 +19,12 @@ class ContainerTest extends TestCase
     {
         $container = new Container();
         $this->assertFalse($container->has('id'));
-        $container->registerDependency('id', 'parangarikotirimirruaro');
+        $container->addFactory('id', 'parangarikotirimirruaro');
         $this->assertTrue($container->has('id'));
 
         $container = new Container();
         $this->assertFalse($container->has('id'));
-        $container->registerSingletonDependency('id', 'parangarikotirimirruaro');
+        $container->addSingleton('id', 'parangarikotirimirruaro');
         $this->assertTrue($container->has('id'));
     }
 
@@ -34,7 +34,7 @@ class ContainerTest extends TestCase
         $container = new Container();
 
         // registra uma dependencia compartilhada
-        $container->registerSingletonDependency('id', 'parangarikotirimirruaro');
+        $container->addSingleton('id', 'parangarikotirimirruaro');
 
         // obtém sa listas de dependencias registradas
         $sharedValue = $this->getPropertyValue($container, 'singleton');
@@ -43,7 +43,7 @@ class ContainerTest extends TestCase
         $this->assertCount(0, $factoryValue);
 
         // tenta registrar uma dependencia não-compartilhada com mesmo $id
-        $container->registerDependency('id', 'sobrescreve');
+        $container->addFactory('id', 'sobrescreve');
 
         // valor foi sobrescrito na dependencia compartilhada
         // não é possível "descompartilhar"
@@ -59,7 +59,7 @@ class ContainerTest extends TestCase
         $container = new Container();
 
         // registra uma dependencia compartilhada
-        $container->registerDependency('id', 'parangarikotirimirruaro');
+        $container->addFactory('id', 'parangarikotirimirruaro');
 
         // obtém sa listas de dependencias registradas
         $sharedValue = $this->getPropertyValue($container, 'singleton');
@@ -68,7 +68,7 @@ class ContainerTest extends TestCase
         $this->assertTrue(in_array('parangarikotirimirruaro', $factoryValue));
 
         // tenta registrar uma dependencia não-compartilhada com mesmo $id
-        $container->registerSingletonDependency('id', 'sobrescreve');
+        $container->addSingleton('id', 'sobrescreve');
 
         // dependência é removida da fabricação e alocada como compartilhada
         $sharedValue = $this->getPropertyValue($container, 'singleton');
@@ -81,15 +81,15 @@ class ContainerTest extends TestCase
     public function setIdAndValue(): void
     {
         $container = new Container();
-        $container->registerDependency('id', 'parangarikotirimirruaro');
+        $container->addFactory('id', 'parangarikotirimirruaro');
         $this->assertEquals('parangarikotirimirruaro', $container->get('id'));
 
         $container = new Container();
-        $container->registerDependency('id', fn() => "kkk");
+        $container->addFactory('id', fn() => "kkk");
         $this->assertEquals('kkk', $container->get('id'));
 
         $container = new Container();
-        $container->registerDependency('id', "ArrayObject");
+        $container->addFactory('id', "ArrayObject");
         $this->assertInstanceOf(ArrayObject::class, $container->get('id'));
     }
 
@@ -97,11 +97,11 @@ class ContainerTest extends TestCase
     public function setIdOnly(): void
     {
         $container = new Container();
-        $container->registerDependency('id');
+        $container->addFactory('id');
         $this->assertEquals('id', $container->get('id'));
 
         $container = new Container();
-        $container->registerDependency(ArrayObject::class);
+        $container->addFactory(ArrayObject::class);
         $this->assertEquals(new ArrayObject(), $container->get(ArrayObject::class));
     }
 
@@ -109,7 +109,7 @@ class ContainerTest extends TestCase
     public function getShared(): void
     {
         $container = new Container();
-        $container->registerSingletonDependency('id', fn() => microtime());
+        $container->addSingleton('id', fn() => microtime());
 
         // a mesma instância é chamada
         $this->assertEquals($container->get('id'), $container->get('id'));
@@ -119,9 +119,9 @@ class ContainerTest extends TestCase
     public function getFactory(): void
     {
         $container = new Container();
-        $container->registerDependency('id', fn() => microtime());
-        $container->registerDependency('args', fn($one, $two) => $one . $two);
-        $container->registerDependency(ArrayObject::class, fn(array $set) => new ArrayObject($set));
+        $container->addFactory('id', fn() => microtime());
+        $container->addFactory('args', fn($one, $two) => $one . $two);
+        $container->addFactory(ArrayObject::class, fn(array $set) => new ArrayObject($set));
 
         // a instância é fabricada a cada chamada
         $this->assertNotEquals($container->get('id'), $container->get('id'));
@@ -141,7 +141,7 @@ class ContainerTest extends TestCase
     public function singleResolution(): void
     {
         $container = new Container();
-        $container->registerSingletonDependency(ArrayObject::class);
+        $container->addSingleton(ArrayObject::class);
 
         /** @var ArrayObject<int, string> */
         $retrieveOne = $container->get(ArrayObject::class);
@@ -169,7 +169,7 @@ class ContainerTest extends TestCase
     public function resolveId(): void
     {
         $container = new Container();
-        $container->registerDependency('closure', fn() => microtime());
+        $container->addFactory('closure', fn() => microtime());
 
         $this->assertNotSame(
             $container->get('closure'),
@@ -177,7 +177,7 @@ class ContainerTest extends TestCase
         );
 
         $container = new Container();
-        $container->registerSingletonDependency('closure', fn() => microtime());
+        $container->addSingleton('closure', fn() => microtime());
     }
 
     /** @test */
@@ -186,7 +186,7 @@ class ContainerTest extends TestCase
         $this->expectException(ContainerException::class);
 
         $container = new Container();
-        $container->registerDependency('closure', fn() => throw new Exception());
+        $container->addFactory('closure', fn() => throw new Exception());
         $container->get('closure');
     }
 }

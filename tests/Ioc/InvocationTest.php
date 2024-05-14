@@ -38,7 +38,7 @@ class InvocationTest extends TestCase
         include_once __DIR__ . '/Support/IocFunction.php';
 
         $container = new Container();
-        $container->registerDependency(ArrayObject::class, fn() => new ArrayObject(['x']));
+        $container->addFactory(ArrayObject::class, fn() => new ArrayObject(['x']));
 
         $control = new InversionOfControl($container);
         $value = $control->resolve($caller); // <- injeta ArrayObject como argumento
