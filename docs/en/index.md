@@ -1,6 +1,6 @@
 # Documentation index
 
-[◂ Back to readme](../../readme.md) | [How to use ▸](01-how-to-use.md)
+[◂ Back to readme](../../readme.md) | [Container ▸](01-container.md)
 -- | --
 
 ## Introduction
@@ -9,6 +9,5 @@ Welcome to the **Iquety Injection** documentation. Here you will find the necess
 
 ## Contents
 
-- [How to use](01-how-to-use.md)
-- [Dependency Injection](02-dependency-injection.md)
-- [Dependency Injection](03-inversion-of-control.md)
+- [Container](01-container.md)
+- [Inversion of Control](02-inversion-of-control.md)

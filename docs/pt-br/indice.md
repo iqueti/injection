@@ -1,6 +1,6 @@
 # Índice da documentação
 
-[◂ Voltar para o leiame](leiame.md) | [Como usar ▸](01-como-usar.md)
+[◂ Voltar para o leiame](leiame.md) | [Container ▸](01-container.md)
 -- | --
 
 ## Introdução
@@ -9,6 +9,5 @@ Bem vindo(a) à documentação da **Iquety Injection**. Aqui você encontra as i
 
 ## Conteúdo
 
-- [Como usar](01-como-usar.md)
-- [Injeção de dependência](02-injecao-de-dependencia.md)
-- [Injeção de dependência](03-inversao-de-controle.md)
+- [Container](01-container.md)
+- [Inversão de Controle](02-inversao-de-controle.md)
