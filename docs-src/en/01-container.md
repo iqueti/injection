@@ -4,7 +4,7 @@
 
 ## 1. Introduction
 
-The "Container" is an object that aims to centralize the storage of values, 
+The "Container" is an object that aims to centralize the storage of values,
 enabling subsequent consultation through factories. This is the standard used
 for Dependency Injection and also the main mechanism for Inversion of Control.
 
@@ -19,7 +19,7 @@ obtained with the `get` method.
 
 ### 2.1. Factory
 
-Values ​​registered with `addFactory` will be "manufactured" every time `get` is 
+Values ​​registered with `addFactory` will be "manufactured" every time `get` is
 invoked. If `get` is called three times, the value will be manufactured three times.
 
 ```php
@@ -91,7 +91,7 @@ $container->addSingleton('identification', MyClass::class);
 $container->get('identification'); 
 ```
 
-If the identifier used is the same full name as the class to be crafted, it will 
+If the identifier used is the same full name as the class to be crafted, it will
 not be necessary to specify the second argument. When invoking the `get` method,
 the class will be instantiated.
 

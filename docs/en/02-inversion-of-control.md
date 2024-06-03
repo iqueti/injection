@@ -10,7 +10,7 @@ Inversion of control (IoC) is a program design principle where the sequence
 that is, it is not determined directly by the programmer. This control is
 delegated to a software infrastructure often called a Container or a
 any other component that can take control over execution. This is a
-feature very common to some frameworks. 
+feature very common to some frameworks.
 
 ## 2. Reversing control
 
